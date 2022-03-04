@@ -3,7 +3,6 @@ package com.example.proyect;
 import com.example.proyect.views.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -23,7 +22,7 @@ public class HelloApplication extends Application {
     private MenuBar mnbMenu;
     private Menu menCompetencia1;
     private Menu menCompetencia2;
-    private MenuItem mitLoteria, mitBuscaminas;
+    private MenuItem mitLoteria, mitBuscaminas,mitParseador;
 
 
     @Override
@@ -36,10 +35,14 @@ public class HelloApplication extends Application {
         mitLoteria.setOnAction(actionEvent -> eventoLoteria(1));
 
         mitBuscaminas = new MenuItem("Buscaminas");
-        mitBuscaminas.setOnAction(actionEvent -> eventoLoteria(2));
+        mitBuscaminas.setOnAction(actionEvent -> eventoLoteria(3));
 
 
-        menCompetencia1.getItems().addAll(mitLoteria);
+
+        mitParseador = new MenuItem("Código Morse");
+        mitParseador.setOnAction(event->eventoLoteria(2));
+
+        menCompetencia1.getItems().addAll(mitLoteria,mitParseador,mitBuscaminas);
 
         menCompetencia2 = new Menu("Competencia 2");
         mnbMenu.getMenus().addAll(menCompetencia1, menCompetencia2);
@@ -47,7 +50,6 @@ public class HelloApplication extends Application {
         vBox = new VBox();
         vBox.getChildren().addAll(mnbMenu);
 
-        Group root = new Group();
         PrimaryStage = new Scene(vBox);
         stage.setTitle("Hello World");
         stage.setScene(PrimaryStage);
@@ -56,7 +58,14 @@ public class HelloApplication extends Application {
 
 
 
-        new Loteria();
+        //new Loteria();
+
+
+        //Paneles();
+
+    }
+
+    private void Paneles(){
         //new BorderPaneTest();
         //new FlowPaneTest();
         //new GridPaneTest();
@@ -68,6 +77,8 @@ public class HelloApplication extends Application {
     private void eventoLoteria(int opc) {
         switch (opc){
             case 1: new Loteria()   ;
+            break;
+            case 2: new Parseador();
             break;
 
         }
