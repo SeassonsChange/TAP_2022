@@ -1,20 +1,27 @@
 package com.example.proyect;
 
+import com.example.proyect.models.Conexion;
 import com.example.proyect.views.*;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class HelloApplication extends Application {
+public class HelloApplication extends Application implements EventHandler{
 
     private Scene PrimaryStage;
 
@@ -22,7 +29,7 @@ public class HelloApplication extends Application {
     private MenuBar mnbMenu;
     private Menu menCompetencia1;
     private Menu menCompetencia2;
-    private MenuItem mitLoteria, mitBuscaminas,mitParseador;
+    private MenuItem mitLoteria, mitBuscaminas,mitParseador, mitClientes;
 
 
     @Override
@@ -42,7 +49,11 @@ public class HelloApplication extends Application {
         mitParseador = new MenuItem("Código Morse");
         mitParseador.setOnAction(event->eventoLoteria(2));
 
-        menCompetencia1.getItems().addAll(mitLoteria,mitParseador,mitBuscaminas);
+        mitClientes = new MenuItem("Taqueria");
+        mitClientes.setOnAction(event -> eventoLoteria(3));
+
+
+        menCompetencia1.getItems().addAll(mitLoteria,mitParseador,mitBuscaminas,mitClientes);
 
         menCompetencia2 = new Menu("Competencia 2");
         mnbMenu.getMenus().addAll(menCompetencia1, menCompetencia2);
@@ -50,28 +61,45 @@ public class HelloApplication extends Application {
         vBox = new VBox();
         vBox.getChildren().addAll(mnbMenu);
 
-        PrimaryStage = new Scene(vBox);
+        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Alert alerta = new Alert(Alert.AlertType.WARNING);
+                alerta.setTitle("Bienvenidos :)");
+                alerta.setHeaderText("Mensaje del Sistema :)");
+                alerta.setContentText("Manejo de eventos de la ventana usando dialogos");
+                alerta.showAndWait();
+            }
+        });
+        stage.addEventHandler(WindowEvent.WINDOW_SHOWING, this);
+        PrimaryStage = new Scene(vBox,300,200);
         stage.setTitle("Hello World");
         stage.setScene(PrimaryStage);
         stage.setMaximized(true);
         stage.show();
 
+        //Abrir la conexión de la base de datos de manera global
+        Conexion.crearConexion();
+        //PrimaryStage.getStylesheets().add(getClass().getResource("CSS/styles.css").toExternalForm());
+
+        File file = new File("CSS/styles.css");
+
+
+        //PrimaryStage.getStylesheets().add(getClass().getResource("resources/CSS/styles.css").toExternalForm());
 
 
         //new Loteria();
-
-
         //Paneles();
 
     }
 
     private void Paneles(){
-        //new BorderPaneTest();
-        //new FlowPaneTest();
-        //new GridPaneTest();
-        //new StackPaneTest();
-        //new TilePaneTest();
-        //new AnchorPaneTest();
+        new BorderPaneTest();
+        new FlowPaneTest();
+        new GridPaneTest();
+        new StackPaneTest();
+        new TilePaneTest();
+        new AnchorPaneTest();
     }
 
     private void eventoLoteria(int opc) {
@@ -80,7 +108,8 @@ public class HelloApplication extends Application {
             break;
             case 2: new Parseador();
             break;
-
+            case 3: new ClientesBD();
+            break;
         }
     }
 
@@ -90,4 +119,16 @@ public class HelloApplication extends Application {
 
 
     }
+
+    @Override
+    public void handle(Event event) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Bienvenidos :)");
+        alerta.setHeaderText("Mensade del Sistema :)");
+        alerta.setContentText("Manejo de eventos de la ventana usando dialogos");
+        alerta.showAndWait();
+
+    }
+
+
 }

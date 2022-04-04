@@ -1,0 +1,8 @@
+.root{
+    -fx-backgrounds-image: url("../images/pexels-jack-hawley-21323.jpg");
+    -fx-background-size: 900 700;
+    -fx-background-repeat: stretch;
+    -fx-background-position center;
+
+
+}
