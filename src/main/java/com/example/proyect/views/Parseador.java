@@ -292,17 +292,7 @@ public class Parseador extends Stage implements EventHandler<KeyEvent> {
                     txtSalida.appendText(escrituraTxt[i]);
                     break;
             }
-
-
-            for (int j = 0; j <escrituraTxt.length; j++) {
-                System.out.println(escrituraTxt[j]);
-            }
         }
-
-
-
-
-
     }
 
     @Override
